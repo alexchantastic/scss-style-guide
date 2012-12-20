@@ -141,7 +141,7 @@ Rules and properties should only be as specific as they need to be. Rules should
 .my-selector {
 	// Includes & Extends
 	@include my-mixin;
-	@extend my-other-selector;
+	@extend .my-other-selector;
 
 	// Positioning
 	position: absolute;
