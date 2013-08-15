@@ -66,13 +66,10 @@ This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/st
 .bar {
 	position: absolute;
 	display: block;
-	font: {
-		family: "Times New Roman", serif;
-		size: 20px;
-	}
-	text-shadow:
-		0 1px 2px #ddd,
-		0 2px 2px #aaa;
+	font-family: "Times New Roman", serif;
+	font-size: 20px;
+	text-shadow: 0 1px 2px #ddd,
+		         0 2px 2px #aaa;
 	color: #000;
 	content: "Hello world";
 	background: rgba(255, 255, 255, 0.15);
@@ -98,13 +95,37 @@ This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/st
 * `line-height` should be unitless (multiplier of `font-size`)
 
 ## File Structure
-Coming soon!
+
+Your file structure can vary, but it is important to try to keep things as organized and consistant as possible since debugging SASS/SCSS via the browser is much more complex (due to it's compiled nature).
+
+Here is an example of a good file structure:
+
+```
+css/
+	pages/
+		_pages.scss
+		blog.scss
+		home.scss
+		login.scss
+	_forms.scss
+	_global.scss
+	_layout.scss
+	_mixins.scss
+	_reset.scss
+	_typography.scss
+	_variables.scss
+	core.scss
+```
+
+`core.scss` will @import all of the other SCSS components. Any files in the `pages/` directory are used for page specific styles when absolutely necessary.
 
 ## Specificity & Naming
 
 ### IDs vs Classes
 
 When writing style declarations, always use classes. IDs should be reserved for JS usage. This is to _increase_ the amount of style resuability and _reduce_ the amount of overriding that needs to be done in the CSS codebase.
+
+If there is an instance where a specific class is needed for a specific element, try to name the class in a semantic manner. For example, `.twitter-box` or `.facebook-box`.
 
 ### Naming Conventions
 
@@ -132,15 +153,14 @@ Rules and properties should only be as specific as they need to be. Rules should
 
 ## Ordering
 
-* Enforeced with [CSScomb](http://csscomb.com/)
-* Use nested rules when possible
+* Enforced with [CSScomb](http://csscomb.com/)
+* Try not to use nested rules
 * Order side values by `top` `right` `bottom` `left`
-* Includes first, then mixings, then regular properties
+* @Extends first, then regular properties
+* @Mixins should go with the relevant section, but if it is a complex mixin, put it at the end
 
 ```scss
 .my-selector {
-	// Includes & Extends
-	@include my-mixin;
 	@extend .my-other-selector;
 
 	// Positioning
@@ -162,15 +182,14 @@ Rules and properties should only be as specific as they need to be. Rules should
 		bottom: 10px;
 	}
 	border: 10px solid #000;
+	@include border-radius(10px);
 	margin: 10px;
 
 	// Typography
-	font: {
-		family: "Times New Roman", serif;
-		size: 12px;
-		style: italic;
-		weight: bold;
-	}
+	font-family: "Times New Roman", serif;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: bold;
 	color: #000;
 	line-height: 1.5;
 	text-align: center;
@@ -181,5 +200,7 @@ Rules and properties should only be as specific as they need to be. Rules should
 	// Other
 	background: #aaa;
 	box-shadow: 0 0 10px #000;
+
+	@include my-mixin;
 }
 ```
