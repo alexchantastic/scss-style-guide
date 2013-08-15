@@ -177,10 +177,8 @@ Rules and properties should only be as specific as they need to be. Rules should
 	box-sizing: border-box;
 	width: 100px;
 	height: 100px;
-	padding: {
-		top: 10px;
-		bottom: 10px;
-	}
+	padding-top: 10px;
+	padding-bottom: 10px;
 	border: 10px solid #000;
 	@include border-radius(10px);
 	margin: 10px;
