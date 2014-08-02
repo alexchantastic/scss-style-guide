@@ -1,10 +1,10 @@
 # SCSS Style Guide
 
-This document outlines a guide on the best practices to write semantic, scalable, and modular SCSS/SASS. Note that these guidelines assume the use of [SASS](http://sass-lang.com/), a CSS pre-processor, and more specifically, the SCSS syntax.
+This document outlines a guide on the best practices to write semantic, scalable, and modular CSS. Note that these guidelines assume the use of [SASS](http://sass-lang.com/), a CSS pre-processor, and more specifically, the SCSS syntax.
 
 The basis for this guide is to outline distinct rules to format and write SCSS, though the principles outlined here can be applied to CSS or SASS syntax as well. Again, the main philosophy is to write SCSS that is as semantic, scalable, and modular as possible. This means that adding to or modifying existing styles should be _extremely_ easy.
 
-This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/styleguide/css) and [Idiomatic CSS](https://github.com/necolas/idiomatic-css). Feel free to fork this guide as well!
+This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/styleguide/css), [Idiomatic CSS](https://github.com/necolas/idiomatic-css), and [BEM](http://bem.info/method/). Feel free to fork this guide as well!
 
 ## Table of Contents
 
@@ -18,21 +18,25 @@ This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/st
 
 ### Declaractions
 
-* Use consistent tabs throughout (preferably a tab character with a four space indent)
+* Use consistent tabs throughout (preferably a soft tab with a two space indent)
 * A rule declaraction should have a space between the class name and the `{`
 * A property declaraction should have a space between the `:` and the value
 * A rule declaration should have a space between each selector unless it is a pseudo selector 
 * Colors should be specified in hex values unless transparency is required, in which case rgba should be used
-* Hex values should be in lowercase and use shorthand if possible
+* Hex values should be in lowercase and use shorthand if possible (ex: `#fff`)
+* rgba values should utilize SASS conversion to maintain the hex value if possible (ex: `rgba(#1a74ba, 0.5)`)
 * Comma-separated values should have a space after the `,`
 * Multiple comma-separated property values should appear indented on multiple lines with one rule per line
-* Decimal values should start with a leading number before the `.`
-* Vendor prefixes should be indented so that their values line up to the value that is farthest out
-* Use double quotes (`""`) when needed
-* Avoid specifying units for zero-values
+* Decimal values should start with a leading number before the `.` (ex: `0.5`)
+* Vendor prefixes should be taken care of by [Autoprefixer](https://github.com/ai/autoprefixer)
+* If vendor prefixes are necessary, they should be indented so that their values line up to the value that is farthest out
+* Use single quotes when needed (ex: `'foo'`)
+* Avoid specifying units for zero-values (ex: `margin: 0`)
 * Single property declarations should appear on a single line
 * Multi property declarations should appear on multiple lines with one rule per line
 * Parent selectors should appear on a new line with an empty line separting them from other declarations
+* Mixins without passed in variables should omit the `()` (ex: `@include my-mixin`)
+* Avoid the use of `!important`
 
 ### Comments
 
@@ -40,7 +44,7 @@ This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/st
 * Single line comments should use the `//` syntax
 * Use comment headings and sub-headings appropriately
 
-### Sample
+### Example
 
 ```scss
 /* ==================================================
@@ -66,16 +70,14 @@ This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/st
 .bar {
 	position: absolute;
 	display: block;
-	font-family: "Times New Roman", serif;
+	font-family: 'Times New Roman', serif;
 	font-size: 20px;
 	text-shadow: 0 1px 2px #ddd,
 		         0 2px 2px #aaa;
 	color: #000;
 	content: "Hello world";
 	background: rgba(255, 255, 255, 0.15);
-	-webkit-box-shadow: 0 0 10px 0 #000;
-	   -moz-box-shadow: 0 0 10px 0 #000;
-	        box-shadow: 0 0 10px 0 #000;
+	box-shadow: 0 0 10px 0 #000;
 }
 
 .baz { display: none; }
@@ -91,12 +93,12 @@ This guide borrows concepts from [GitHub's CSS Styleguide](https://github.com/st
 
 ## Units
 
-* Use `px` for `font-size`
+* Use `rem` for `font-size`
 * `line-height` should be unitless (multiplier of `font-size`)
 
 ## File Structure
 
-Your file structure can vary, but it is important to try to keep things as organized and consistant as possible since debugging SASS/SCSS via the browser is much more complex (due to it's compiled nature).
+Your file structure can vary, but it is important to try to keep things as organized and consistant as possible since debugging via the browser is much more complex (due to it's compiled nature). Using a source map may help you as well.
 
 Here is an example of a good file structure:
 
@@ -112,12 +114,23 @@ css/
 	_layout.scss
 	_mixins.scss
 	_reset.scss
+	_sprites.scss
 	_typography.scss
+	_utilities.scss
 	_variables.scss
-	core.scss
+	app.scss
 ```
 
-`core.scss` will @import all of the other SCSS components. Any files in the `pages/` directory are used for page specific styles when absolutely necessary.
+`core.scss` will `@import` all of the other SCSS components. Any files in the `pages/` directory are used for page specific styles when absolutely necessary. `_pages.scss` is included in each page specific `.scss` file to give access to app mixins, variables, and utilities.
+
+Partial files should be should be named starting with an `_` and be pluralized (ex: `_buttons.scss`).
+
+Within a component file, the organization should be:
+
+1. Component blocks
+2. Component modifiers
+3. Elements
+4. Element modifiers
 
 ## Specificity & Naming
 
@@ -131,7 +144,62 @@ If there is an instance where a specific class is needed for a specific element,
 
 Rules should be named so that someone looking at just the markup should be able to determine, to a certain degree, what that rule is going to do.
 
-Class names should be all lower case and use `-`s when needed.
+Class names should use all lower case and adhere to a BEM-like style.
+
+```scss
+.media {
+	...
+}
+
+.media-object {
+	...
+}
+
+.media-object-reversed {
+	...
+}
+
+.media-body {
+	...
+}
+```
+
+```html
+<div class="media">
+	<div class="media-object media-object-reversed"></div>
+	<div class="media-body"></div>
+</div>
+```
+
+As you can see, the class names are broken down into first a block (`.media`), as refered to as a component. Then, into elements (`.media-object` and `.media-body`). And finally into modifiers (`.media-object-reversed`).
+
+Your naming scheme for blocks, elements, and modifiers should be clear so that there is no confusion as to wheter a prefix is an elment or a modifier. This scheme prevents any unnecessary nesting so that our SCSS maintains its flexibility.
+
+### Nesting
+
+While nesting is a great feature of SASS, it can easily make things much more complex and hard to digest. Nesting should be limited to 4 levels or less.
+
+### Extending
+
+Again, while extending selectors (`@extend`) is a great feature of SASS, it can easily make this much more complex and hard to digest. Extends should be used sparingly and only when they can be easily grouped together. More often than not, it would make more sense to pull something out into a mixin rather than use an extend.
+
+### Media Queries
+
+SASS allows media queries to be nested inside of a selector. This can make our code very easy to digest when working in responsive styles.
+
+```scss
+.my-selector {
+	height: 100px;
+	backgroud-color: #000;
+
+	@media (min-width: 1024px) {
+		height: 200px;
+		background-color: #fff;
+	}
+}
+```
+
+However, when working with specific breakpoint classes, then it is advisable to use the regular approach where selectors are nested within the `@media` block.
 
 ### Rule & Property Specificity
 
@@ -151,13 +219,30 @@ Rules and properties should only be as specific as they need to be. Rules should
 }
 ```
 
+Additional, excessive use of child selectors should be avoided to maintain flexibility.
+
+```scss
+// Bad :(
+ul.tabs > li.tab {
+	...
+}
+
+// Good :)
+.tabs {
+	...
+}
+
+.tab {
+	...
+}
+```
+
 ## Ordering
 
-* Enforced with [CSScomb](http://csscomb.com/)
 * Try not to use nested rules
 * Order side values by `top` `right` `bottom` `left`
-* @Extends first, then regular properties
-* @Mixins should go with the relevant section, but if it is a complex mixin, put it at the end
+* `@extend`s first, then regular properties
+* Mixins (`@include`) should go with the relevant section, but if it is a complex mixin, put it at the end
 
 ```scss
 .my-selector {
@@ -184,8 +269,8 @@ Rules and properties should only be as specific as they need to be. Rules should
 	margin: 10px;
 
 	// Typography
-	font-family: "Times New Roman", serif;
-	font-size: 12px;
+	font-family: 'Times New Roman', serif;
+	font-size: 1rem;
 	font-style: italic;
 	font-weight: bold;
 	color: #000;
