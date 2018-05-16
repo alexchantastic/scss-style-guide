@@ -52,8 +52,8 @@ This guide borrows concepts from [Code Guide by @mdo](http://codeguide.co/), [Id
 //
 // This is a comment block heading
 //
-// Iaculis velit a laoreet consectetur mollis dignissim diam fringilla, 
-// commodo vulputate turpis dis praesent lacus lorem, justo accumsan 
+// Iaculis velit a laoreet consectetur mollis dignissim diam fringilla,
+// commodo vulputate turpis dis praesent lacus lorem, justo accumsan
 // platea scelerisque pharetra viverra id.
 
 // This is a good example
@@ -294,17 +294,28 @@ $color-white: #fff;
 
 ## Linting
 
-It is best to leverage a linter like [stylelint](https://github.com/stylelint/stylelint) to make it easy to adhere to the following guidelines. A stylelint config file is included in this repository.
+It is best to leverage a linter like [stylelint](https://github.com/stylelint/stylelint) to make it easy to adhere to the following guidelines. A stylelint config file (`.stylelintrc`) is included in this repository or you can use install this repository as a package and point to it in your own stylelint config file.
 
 ### Installation
 
 #### Yarn
+
 ```
 yarn add scss-style-guide --dev
 ```
 
 #### npm
+
 ```
 npm install scss-style-guide --save-dev
 ```
 
+#### `.stylelintrc`
+
+```
+{
+  "extends": [
+    "scss-style-guide"
+  ]
+}
+```
