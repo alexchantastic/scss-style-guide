@@ -1,0 +1,22 @@
+"use strict";
+
+module.exports = {
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recess-order"
+  ],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
+    "selector-pseudo-element-colon-notation": "single",
+    "selector-type-no-unknown": [
+      true,
+      {
+        ignore: "custom-elements"
+      }
+    ]
+  }
+};
