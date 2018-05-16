@@ -10,6 +10,10 @@
     "stylelint-config"
   ],
   "main": "index.js",
+  "homepage": "https://github.com/alexchantastic/scss-style-guide",
+  "bugs": {
+    "url": "https://github.com/alexchantastic/scss-style-guide/issues"
+  },
   "repository": "git@github.com:alexchantastic/scss-style-guide.git",
   "author": "Alex Chan",
   "license": "MIT",
@@ -23,6 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^4.19.1",
-    "eslint-config-stylelint": "^8.1.0"
+    "eslint-config-stylelint": "^8.1.0",
+    "stylelint": "^9.2.1"
   }
 }
