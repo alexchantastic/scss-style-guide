@@ -294,20 +294,20 @@ $color-white: #fff;
 
 ## Linting
 
-It is best to leverage a linter like [stylelint](https://github.com/stylelint/stylelint) to make it easy to adhere to the following guidelines. A stylelint config file (`.stylelintrc`) is included in this repository or you can use install this repository as a package and point to it in your own stylelint config file.
+It is best to leverage a linter like [stylelint](https://github.com/stylelint/stylelint) to make it easy to adhere to the following guidelines. You can install this repository through your package manager and point to it in your own stylelint config file. Alternatively, you can copy the stylelint config file ([`.stylelintrc`](https://github.com/alexchantastic/scss-style-guide/blob/master/.stylelintrc)) included in this repository into your project.
 
 ### Installation
 
 #### Yarn
 
 ```
-yarn add scss-style-guide --dev
+yarn add stylelint scss-style-guide --dev
 ```
 
 #### npm
 
 ```
-npm install scss-style-guide --save-dev
+npm install stylelint scss-style-guide --save-dev
 ```
 
 #### `.stylelintrc`
