@@ -1,0 +1,24 @@
+{
+  "name": "scss-style-guide",
+  "version": "2.0.0",
+  "description": "Style guide for writing semantic, scalable, and modular SCSS.",
+  "keywords": [
+    "styleguide",
+    "scss",
+    "sass",
+    "stylelint",
+    "stylelint-config"
+  ],
+  "main": "index.js",
+  "repository": "git@github.com:alexchantastic/scss-style-guide.git",
+  "author": "Alex Chan",
+  "license": "MIT",
+  "peerDependencies": {
+    "stylelint": "^9.2.1"
+  },
+  "dependencies": {
+    "stylelint-config-recess-order": "^2.0.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-scss": "^3.1.0"
+  }
+}
